@@ -1,0 +1,22 @@
+.git
+.gitignore
+.dockerignore
+
+# Environment Variables
+.env
+.env.*
+
+# Binaries
+bin/
+compliance-server
+*.exe
+*.test
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dockerfile
+Dockerfile

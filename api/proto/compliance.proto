@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package compliance;
+
+option go_package = "github.com/PTGRAG/compliance-backend/pkg/pb";
+
+service ComplianceService {
+  rpc ScreenTransaction (ScreenTransactionRequest) returns (ScreenTransactionResponse);
+}
+
+message ScreenTransactionRequest {
+  string transaction_id = 1;
+  string sender_wallet = 2;
+  string receiver_wallet = 3;
+  double amount = 4;
+  string currency = 5;
+  string user_id = 6;
+  string user_full_name = 7;
+  
+  // NEW fields for Travel Rule
+  bool requires_travel_rule = 8;
+  string beneficiary_name = 9; // The person receiving the money
+}
+
+message ScreenTransactionResponse {
+  bool is_approved = 1;
+  string risk_level = 2; 
+  string didit_record_id = 3;
+  string error_message = 4;
+}
