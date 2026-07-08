@@ -20,6 +20,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /app/compliance-server ./cmd/server
 # Start a new stage from scratch
 FROM alpine:latest
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 WORKDIR /app
 
 # Copy the Pre-built binary file from the previous stage
