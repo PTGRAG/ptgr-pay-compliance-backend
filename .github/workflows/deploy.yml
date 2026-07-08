@@ -135,16 +135,3 @@ jobs:
             echo "Deployment successful. Saved ${NEW_TAG} to ${LAST_TAG_FILE}"
             sudo docker image prune -f 2>/dev/null || true
 
-      - name: Notify deployment status via Telegram
-        if: always()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🚀 PTGR PAY Compliance Service Deployment ${{ job.status == 'success' && '✅ SUCCESS' || '❌ FAILED' }}
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Docker Image: ${{ env.BACKEND_IMAGE }}:${{ env.DOCKER_TAG }}
-            Server: ${{ secrets.SERVER_IP }}
