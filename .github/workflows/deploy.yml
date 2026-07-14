@@ -83,7 +83,7 @@ jobs:
             sudo env COMPLIANCE_SERVICE_IMAGE="${IMAGE}:${NEW_TAG}" POSTGRES_PASSWORD="dummy" docker compose -f docker-compose.prod.yml rm -f compliance-service || true
 
             echo "Starting new compliance-service container using ${IMAGE}:${NEW_TAG} ..."
-            sudo env COMPLIANCE_SERVICE_IMAGE="${IMAGE}:${NEW_TAG}" POSTGRES_PASSWORD="dummy" docker compose -f docker-compose.prod.yml up -d --no-deps compliance-service
+            sudo env COMPLIANCE_SERVICE_IMAGE="${IMAGE}:${NEW_TAG}" POSTGRES_PASSWORD="dummy" docker compose -f docker-compose.prod.yml up -d --no-deps --remove-orphans compliance-service
 
             echo "Waiting for compliance-service to become healthy..."
             sleep 5
@@ -123,7 +123,7 @@ jobs:
               if [ -n "${LAST_TAG}" ]; then
                 echo "Rolling back to last tag: ${LAST_TAG}"
                 if sudo docker pull "${IMAGE}:${LAST_TAG}" 2>/dev/null; then
-                  sudo env COMPLIANCE_SERVICE_IMAGE="${IMAGE}:${LAST_TAG}" POSTGRES_PASSWORD="dummy" docker compose -f docker-compose.prod.yml up -d --no-deps compliance-service || true
+                  sudo env COMPLIANCE_SERVICE_IMAGE="${IMAGE}:${LAST_TAG}" POSTGRES_PASSWORD="dummy" docker compose -f docker-compose.prod.yml up -d --no-deps --remove-orphans compliance-service || true
                   exit 0
                 fi
               fi
